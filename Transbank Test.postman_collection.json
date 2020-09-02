@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "6fd461d8-3a92-4cc7-a643-65f78bdad8f6",
+		"name": "Transbank Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/people/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d18eb739-269a-4ae9-a2a7-fe5b59c4a189",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"uuidGlobal\",jsonData.id)\r",
+							"\r",
+							"pm.test(\"Code is 200 and OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Id include in the body\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate value variables\",function(){\r",
+							"    pm.expect(jsonData.username).to.eql(\"Gabriel\");\r",
+							"    pm.expect(jsonData.lastName).to.eql(\"Fuentes\");\r",
+							"    pm.expect(jsonData.age).to.eql(11);\r",
+							"    })\r",
+							"\r",
+							"pm.test(\"Validate json format\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"username\": \"Gabriel\",\n        \"lastName\": \"Fuentes\",\n        \"age\": 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/people/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"people",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/people/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c92497b3-bce8-4b23-ae1c-18ccc8e33b4e",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Code is 200 and OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Id include in the body\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate value variables\",function(){\r",
+							"    pm.expect(jsonData[0].username).to.eql(\"Gabriel\");\r",
+							"    pm.expect(jsonData[0].lastName).to.eql(\"Fuentes\");\r",
+							"    pm.expect(jsonData[0].age).to.eql(11);\r",
+							"    pm.expect(jsonData[0].id).to.eql(pm.globals.get(\"uuidGlobal\"));   \r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Validate json format\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"username\": \"Gabriel\",\n        \"lastName\": \"Fuentes\",\n        \"age\": 11\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/people/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"people",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
